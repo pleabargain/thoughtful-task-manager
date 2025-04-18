@@ -1,0 +1,8 @@
+ollama-python>=0.1.0
+rich>=13.0.0
+pyyaml>=6.0.1
+python-dateutil>=2.8.2
+pytest>=7.0.0
+networkx>=3.0
+matplotlib>=3.7.0
+plotly>=5.18.0 
