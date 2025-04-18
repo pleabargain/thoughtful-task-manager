@@ -1,0 +1,205 @@
+2025-04-18 17:30:37 [    INFO] Starting test session. Logging to: C:\Users\denni\Documents\thoughtful task manager\logs\tests\test_run_2025-04-18_17-30-37.log (conftest.py:70)
+2025-04-18 17:30:37 [    INFO] Test passed: test_task_from_dict_with_id (conftest.py:82)
+2025-04-18 17:30:37 [    INFO] Test passed: test_task_with_id_parameter (conftest.py:82)
+2025-04-18 17:30:37 [    INFO] Test passed: test_file_handler_load_tasks_structure (conftest.py:82)
+2025-04-18 17:30:37 [    INFO] Test passed: test_priority_validation_direct (conftest.py:82)
+2025-04-18 17:30:37 [    INFO] Test passed: test_model_verification_all_methods_fail (conftest.py:82)
+2025-04-18 17:30:37 [   ERROR] Test failed: test_model_verification_chat_fallback_to_generate (conftest.py:84)
+2025-04-18 17:30:37 [   ERROR] Failure details:
+self = <tests.test_ai_model_verification.TestAIModelVerification testMethod=test_model_verification_chat_fallback_to_generate>
+mock_post = <MagicMock name='post' id='2772347851152'>, mock_client = <MagicMock name='Client' id='2772347854848'>
+
+    @patch('ollama.Client')
+    @patch('requests.post')
+    def test_model_verification_chat_fallback_to_generate(self, mock_post, mock_client):
+        """Test fallback to generate when chat fails."""
+        # Setup mock client
+        mock_instance = MagicMock()
+        mock_client.return_value = mock_instance
+    
+        # Mock the chat method to raise an exception
+        mock_instance.chat.side_effect = Exception("Chat method failed")
+    
+        # Mock the generate method to return a valid response
+        mock_instance.generate.return_value = {
+            'response': 'Test response'
+        }
+    
+        # Create test instance
+        test_api = AIAPI()
+        test_api._client = mock_instance
+    
+        # Test verification with chat failure but successful generate
+        self.assertTrue(test_api._verify_model('test:latest'))
+    
+        # Verify both methods were called
+        mock_instance.chat.assert_called_once()
+        mock_instance.generate.assert_called_once()
+        # Direct API calls should not be made if generate succeeds
+>       mock_post.assert_not_called()
+
+tests\test_ai_model_verification.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <MagicMock name='post' id='2772347851152'>
+
+    def assert_not_called(self):
+        """assert that the mock was never called.
+        """
+        if self.call_count != 0:
+            msg = ("Expected '%s' to not have been called. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'post' to not have been called. Called 2 times.
+E           Calls: [call('http://localhost:11434/api/generate', json={'model': 'test:latest', 'prompt': 'Test.', 'stream': False}, timeout=10),
+E            call().status_code.__eq__(200),
+E            call().status_code.__str__(),
+E            call('http://localhost:11434/api/show', json={'name': 'test:latest'}, timeout=10),
+E            call().status_code.__eq__(200),
+E            call().status_code.__str__()].
+
+C:\Python312\Lib\unittest\mock.py:910: AssertionError (conftest.py:86)
+2025-04-18 17:30:37 [   ERROR] Test failed: test_model_verification_direct_api_fallback (conftest.py:84)
+2025-04-18 17:30:37 [   ERROR] Failure details:
+self = <tests.test_ai_model_verification.TestAIModelVerification testMethod=test_model_verification_direct_api_fallback>
+mock_post = <MagicMock name='post' id='2772347936528'>, mock_client = <MagicMock name='Client' id='2772347941856'>
+
+    @patch('ollama.Client')
+    @patch('requests.post')
+    def test_model_verification_direct_api_fallback(self, mock_post, mock_client):
+        """Test fallback to direct API calls when client methods fail."""
+        # Setup mock client
+        mock_instance = MagicMock()
+        mock_client.return_value = mock_instance
+    
+        # Mock the chat and generate methods to fail
+        mock_instance.chat.side_effect = Exception("Chat method failed")
+        mock_instance.generate.side_effect = Exception("Generate method failed")
+    
+        # Mock the direct API call to succeed
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_post.return_value = mock_response
+    
+        # Create test instance
+        test_api = AIAPI()
+        test_api._client = mock_instance
+    
+        # Test verification with direct API fallback
+        self.assertTrue(test_api._verify_model('test:latest'))
+    
+        # Verify all methods were called
+>       mock_instance.chat.assert_called_once()
+
+tests\test_ai_model_verification.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <MagicMock name='Client().chat' id='2772348735984'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'chat' to have been called once. Called 0 times.
+
+C:\Python312\Lib\unittest\mock.py:928: AssertionError (conftest.py:86)
+2025-04-18 17:30:39 [    INFO] Test passed: test_model_verification_missing_models_key (conftest.py:82)
+2025-04-18 17:30:39 [   ERROR] Test failed: test_model_verification_model_info_fallback (conftest.py:84)
+2025-04-18 17:30:39 [   ERROR] Failure details:
+self = <tests.test_ai_model_verification.TestAIModelVerification testMethod=test_model_verification_model_info_fallback>
+mock_post = <MagicMock name='post' id='2772348778592'>, mock_client = <MagicMock name='Client' id='2772348210448'>
+
+    @patch('ollama.Client')
+    @patch('requests.post')
+    def test_model_verification_model_info_fallback(self, mock_post, mock_client):
+        """Test fallback to model info check when other methods fail."""
+        # Setup mock client
+        mock_instance = MagicMock()
+        mock_client.return_value = mock_instance
+    
+        # Mock the chat and generate methods to fail
+        mock_instance.chat.side_effect = Exception("Chat method failed")
+        mock_instance.generate.side_effect = Exception("Generate method failed")
+    
+        # Mock the first direct API call to fail
+        first_response = MagicMock()
+        first_response.status_code = 500
+    
+        # Mock the model info check to succeed
+        second_response = MagicMock()
+        second_response.status_code = 200
+        second_response.json.return_value = {'modelfile': 'FROM mistral:latest'}
+    
+        # Set up the mock to return different responses for different calls
+        mock_post.side_effect = [first_response, second_response]
+    
+        # Create test instance
+        test_api = AIAPI()
+        test_api._client = mock_instance
+    
+        # Test verification with model info fallback
+        self.assertTrue(test_api._verify_model('test:latest'))
+    
+        # Verify all methods were called
+>       mock_instance.chat.assert_called_once()
+
+tests\test_ai_model_verification.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <MagicMock name='Client().chat' id='2772348217984'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'chat' to have been called once. Called 0 times.
+
+C:\Python312\Lib\unittest\mock.py:928: AssertionError (conftest.py:86)
+2025-04-18 17:30:50 [    INFO] Test passed: test_model_verification_name_error (conftest.py:82)
+2025-04-18 17:31:06 [    INFO] Test passed: test_model_verification_non_dict_response (conftest.py:82)
+2025-04-18 17:31:12 [    INFO] Test passed: test_model_verification_successful (conftest.py:82)
+2025-04-18 17:31:12 [    INFO] Test passed: test_load_tasks_empty_file (conftest.py:82)
+2025-04-18 17:31:12 [    INFO] Test passed: test_load_tasks_direct_list (conftest.py:82)
+2025-04-18 17:31:12 [    INFO] Test passed: test_load_tasks_with_tasks_key (conftest.py:82)
+2025-04-18 17:31:12 [    INFO] Test passed: test_save_and_load_tasks (conftest.py:82)
+2025-04-18 17:31:12 [    INFO] Test passed: test_client_initialization (conftest.py:82)
+2025-04-18 17:31:16 [    INFO] Test passed: test_connection_retry (conftest.py:82)
+2025-04-18 17:31:16 [    INFO] Test passed: test_direct_api_verification (conftest.py:82)
+2025-04-18 17:31:16 [    INFO] Test passed: test_model_list_command (conftest.py:82)
+2025-04-18 17:31:16 [    INFO] Test passed: test_model_name_parsing (conftest.py:82)
+2025-04-18 17:31:20 [    INFO] Test passed: test_model_verification_failure (conftest.py:82)
+2025-04-18 17:31:23 [    INFO] Test passed: test_ollama_service_running (conftest.py:82)
+2025-04-18 17:31:23 [    INFO] Test passed: test_verify_model_prioritizes_direct_api (conftest.py:82)
+2025-04-18 17:31:23 [    INFO] Test passed: test_load_tasks (conftest.py:82)
+2025-04-18 17:31:23 [    INFO] Test passed: test_add_task (conftest.py:82)
+2025-04-18 17:31:23 [    INFO] Test passed: test_update_task (conftest.py:82)
+2025-04-18 17:31:23 [    INFO] Test passed: test_delete_task (conftest.py:82)
+2025-04-18 17:31:23 [    INFO] Test passed: test_get_task (conftest.py:82)
+2025-04-18 17:31:23 [    INFO] Test passed: test_task_creation (conftest.py:82)
+2025-04-18 17:31:23 [    INFO] Test passed: test_task_to_dict (conftest.py:82)
+2025-04-18 17:31:23 [    INFO] Test passed: test_task_from_dict (conftest.py:82)
+2025-04-18 17:31:25 [    INFO] Test passed: test_add_task_dict_attribute_error (conftest.py:82)
+2025-04-18 17:31:27 [    INFO] Test passed: test_display_tasks_with_dict_tasks (conftest.py:82)
+2025-04-18 17:31:27 [    INFO] Test passed: test_task_with_id (conftest.py:82)
+2025-04-18 17:31:27 [    INFO] Test passed: test_task_to_dict_with_id (conftest.py:82)
+2025-04-18 17:31:27 [    INFO] Test passed: test_task_from_dict_with_id (conftest.py:82)
+2025-04-18 17:31:27 [    INFO] Test passed: test_priority_validation_string (conftest.py:82)
+2025-04-18 17:31:27 [    INFO] Test passed: test_priority_validation_out_of_range_high (conftest.py:82)
+2025-04-18 17:31:27 [    INFO] Test passed: test_priority_validation_out_of_range_low (conftest.py:82)
+2025-04-18 17:31:27 [    INFO] Test passed: test_priority_validation_non_integer (conftest.py:82)
+2025-04-18 17:31:30 [    INFO] Test passed: test_complete_task_lifecycle (conftest.py:82)
+2025-04-18 17:31:35 [    INFO] Test passed: test_delete_task (conftest.py:82)
+2025-04-18 17:31:40 [    INFO] Test passed: test_task_priority_validation (conftest.py:82)
+2025-04-18 17:31:40 [    INFO] Test session completed (conftest.py:72)

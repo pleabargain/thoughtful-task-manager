@@ -1,0 +1,5 @@
+2025-04-18 18:37:16 [    INFO] Starting test session. Logging to: C:\Users\denni\Documents\thoughtful task manager\logs\tests\test_run_2025-04-18_18-37-16.log (conftest.py:70)
+2025-04-18 18:37:16 [    INFO] Test passed: test_analyze_task_patterns_with_task_objects (conftest.py:82)
+2025-04-18 18:37:16 [    INFO] Test passed: test_analyze_task_patterns_with_dict_tasks (conftest.py:82)
+2025-04-18 18:37:16 [    INFO] Test passed: test_analyze_task_patterns_with_mixed_types (conftest.py:82)
+2025-04-18 18:37:16 [    INFO] Test session completed (conftest.py:72)

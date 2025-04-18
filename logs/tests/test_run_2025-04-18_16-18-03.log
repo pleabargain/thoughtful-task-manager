@@ -1,0 +1,223 @@
+2025-04-18 16:18:03 [    INFO] Starting test session. Logging to: C:\Users\denni\Documents\thoughtful task manager\logs\tests\test_run_2025-04-18_16-18-03.log (conftest.py:70)
+2025-04-18 16:18:03 [    INFO] Test passed: test_task_from_dict_with_id (conftest.py:82)
+2025-04-18 16:18:03 [    INFO] Test passed: test_task_with_id_parameter (conftest.py:82)
+2025-04-18 16:18:03 [    INFO] Test passed: test_file_handler_load_tasks_structure (conftest.py:82)
+2025-04-18 16:18:03 [    INFO] Test passed: test_priority_validation_direct (conftest.py:82)
+2025-04-18 16:18:03 [    INFO] Test passed: test_client_initialization (conftest.py:82)
+2025-04-18 16:18:07 [    INFO] Test passed: test_connection_retry (conftest.py:82)
+2025-04-18 16:18:07 [    INFO] Test passed: test_model_list_command (conftest.py:82)
+2025-04-18 16:18:07 [    INFO] Test passed: test_model_name_parsing (conftest.py:82)
+2025-04-18 16:18:07 [    INFO] Test passed: test_model_verification_failure (conftest.py:82)
+2025-04-18 16:18:09 [    INFO] Test passed: test_ollama_service_running (conftest.py:82)
+2025-04-18 16:18:09 [   ERROR] Test failed: test_load_tasks (conftest.py:84)
+2025-04-18 16:18:09 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x00000228DF816E70>, test_data_file = 'C:\\Users\\denni\\AppData\\Local\\Temp\\pytest-of-denni\\pytest-5\\test_load_tasks0\\test_tasks.json'
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_load_tasks(task_manager, test_data_file, sample_tasks):
+        """Test loading tasks from a file."""
+        # Write sample tasks to the test file
+        with open(test_data_file, 'w') as f:
+            json.dump({'tasks': sample_tasks}, f)
+    
+        # Create a new manager instance to load the tasks
+        manager = TaskManager(data_file=test_data_file)
+>       loaded_tasks = manager.list_tasks()
+
+tests\test_run.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src\main.py:74: in list_tasks
+    return self.task_api.list_tasks()
+src\api\task_api.py:76: in list_tasks
+    return self._file_handler.load_tasks()
+src\utils\file_handler.py:35: in load_tasks
+    return [Task.from_dict(task_data) for task_data in tasks_data]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'src.models.task.Task'>, data = 'tasks'
+
+    @classmethod
+    def from_dict(cls, data: dict) -> 'Task':
+        """Create a Task instance from dictionary data."""
+        if "created_date" in data:
+            data["created_date"] = datetime.fromisoformat(data["created_date"])
+        if "due_date" in data and data["due_date"]:
+            data["due_date"] = datetime.fromisoformat(data["due_date"])
+>       return cls(**data)
+E       TypeError: src.models.task.Task() argument after ** must be a mapping, not str
+
+src\models\task.py:46: TypeError (conftest.py:86)
+2025-04-18 16:18:09 [   ERROR] Test failed: test_add_task (conftest.py:84)
+2025-04-18 16:18:09 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x00000228DFC10200>
+
+    def test_add_task(task_manager):
+        """Test adding a new task."""
+        new_task = {
+            'id': 'task-004',
+            'title': 'New Test Task',
+            'status': 'pending',
+            'priority': 'medium',
+            'due_date': '2024-04-30'
+        }
+    
+>       added_task = task_manager.add_task(new_task)
+
+tests\test_run.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src\main.py:79: in add_task
+    return self.task_api.create_task(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <src.api.task_api.TaskAPI object at 0x00000228DFC10290>, title = 'New Test Task', description = '', kwargs = {'id': 'task-004', 'priority': 'medium', 'status': 'pending'}
+
+    def create_task(self, title: str, description: str, **kwargs) -> Task:
+        """Create a new task."""
+>       task = Task(title=title, description=description, **kwargs)
+E       TypeError: Task.__init__() got an unexpected keyword argument 'id'
+
+src\api\task_api.py:42: TypeError (conftest.py:86)
+2025-04-18 16:18:09 [   ERROR] Test failed: test_update_task (conftest.py:84)
+2025-04-18 16:18:09 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x00000228DFC0D2E0>
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_update_task(task_manager, sample_tasks):
+        """Test updating an existing task."""
+        # First add a task
+>       task_manager.add_task(sample_tasks[0])
+
+tests\test_run.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src\main.py:79: in add_task
+    return self.task_api.create_task(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <src.api.task_api.TaskAPI object at 0x00000228DFC0D5E0>, title = 'Complete Project Documentation'
+description = 'Write comprehensive documentation for the project including setup, usage, and API references', kwargs = {'id': 'task-001', 'priority': 'high', 'status': 'pending'}
+
+    def create_task(self, title: str, description: str, **kwargs) -> Task:
+        """Create a new task."""
+>       task = Task(title=title, description=description, **kwargs)
+E       TypeError: Task.__init__() got an unexpected keyword argument 'id'
+
+src\api\task_api.py:42: TypeError (conftest.py:86)
+2025-04-18 16:18:09 [   ERROR] Test failed: test_delete_task (conftest.py:84)
+2025-04-18 16:18:09 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x00000228DFC10200>
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_delete_task(task_manager, sample_tasks):
+        """Test deleting a task."""
+        # First add a task
+>       task_manager.add_task(sample_tasks[0])
+
+tests\test_run.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src\main.py:79: in add_task
+    return self.task_api.create_task(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <src.api.task_api.TaskAPI object at 0x00000228DFC11970>, title = 'Complete Project Documentation'
+description = 'Write comprehensive documentation for the project including setup, usage, and API references', kwargs = {'id': 'task-001', 'priority': 'high', 'status': 'pending'}
+
+    def create_task(self, title: str, description: str, **kwargs) -> Task:
+        """Create a new task."""
+>       task = Task(title=title, description=description, **kwargs)
+E       TypeError: Task.__init__() got an unexpected keyword argument 'id'
+
+src\api\task_api.py:42: TypeError (conftest.py:86)
+2025-04-18 16:18:09 [   ERROR] Test failed: test_get_task (conftest.py:84)
+2025-04-18 16:18:09 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x00000228DFC10110>
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_get_task(task_manager, sample_tasks):
+        """Test getting a specific task."""
+        # First add a task
+>       task_manager.add_task(sample_tasks[0])
+
+tests\test_run.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src\main.py:79: in add_task
+    return self.task_api.create_task(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <src.api.task_api.TaskAPI object at 0x00000228DFC11D30>, title = 'Complete Project Documentation'
+description = 'Write comprehensive documentation for the project including setup, usage, and API references', kwargs = {'id': 'task-001', 'priority': 'high', 'status': 'pending'}
+
+    def create_task(self, title: str, description: str, **kwargs) -> Task:
+        """Create a new task."""
+>       task = Task(title=title, description=description, **kwargs)
+E       TypeError: Task.__init__() got an unexpected keyword argument 'id'
+
+src\api\task_api.py:42: TypeError (conftest.py:86)
+2025-04-18 16:18:09 [    INFO] Test passed: test_task_creation (conftest.py:82)
+2025-04-18 16:18:09 [    INFO] Test passed: test_task_to_dict (conftest.py:82)
+2025-04-18 16:18:09 [    INFO] Test passed: test_task_from_dict (conftest.py:82)
+2025-04-18 16:18:14 [    INFO] Test passed: test_complete_task_lifecycle (conftest.py:82)
+2025-04-18 16:18:17 [   ERROR] Test failed: test_delete_task (conftest.py:84)
+2025-04-18 16:18:17 [   ERROR] Failure details:
+self = <tests.test_user_input.TestUserInput testMethod=test_delete_task>, mock_ask = <MagicMock name='ask' id='2374575899616'>
+
+    @patch('rich.prompt.Prompt.ask')
+    def test_delete_task(self, mock_ask):
+        """Test deleting a task."""
+        # First create a task
+        test_task = {
+            'id': 'test-001',
+            'title': 'Test Task',
+            'description': 'Task to be deleted',
+            'status': 'pending',
+            'priority': 3
+        }
+>       self.task_manager.add_task(test_task)
+
+tests\test_user_input.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src\main.py:79: in add_task
+    return self.task_api.create_task(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <src.api.task_api.TaskAPI object at 0x00000228DFC10A40>, title = 'Test Task', description = 'Task to be deleted', kwargs = {'id': 'test-001', 'priority': 3, 'status': 'pending'}
+
+    def create_task(self, title: str, description: str, **kwargs) -> Task:
+        """Create a new task."""
+>       task = Task(title=title, description=description, **kwargs)
+E       TypeError: Task.__init__() got an unexpected keyword argument 'id'
+
+src\api\task_api.py:42: TypeError (conftest.py:86)
+2025-04-18 16:18:21 [   ERROR] Test failed: test_task_priority_validation (conftest.py:84)
+2025-04-18 16:18:21 [   ERROR] Failure details:
+self = <tests.test_user_input.TestUserInput testMethod=test_task_priority_validation>, mock_ask = <MagicMock name='ask' id='2374575675520'>
+
+    @patch('rich.prompt.Prompt.ask')
+    def test_task_priority_validation(self, mock_ask):
+        """Test that task priority is validated correctly."""
+        # Mock user inputs with invalid then valid priority
+        mock_ask.side_effect = [
+            "2",  # Add task
+            "Priority Test Task",  # Task title
+            "Testing priority validation",  # Description
+            "10",  # Invalid priority (out of range)
+            "3",  # Valid priority
+            "8"   # Exit
+        ]
+    
+        # Run the application with mocked input
+        with patch('rich.console.Console.print') as mock_print:
+            try:
+                self.task_manager.run()
+            except SystemExit:
+                pass  # Expected when exiting
+            except ValueError:
+                self.fail("Priority validation failed")
+    
+        # Verify task was created with correct priority
+        tasks = self.task_manager.list_tasks()
+        self.assertEqual(len(tasks), 1)
+>       self.assertEqual(tasks[0].priority, 3)
+E       AssertionError: 10 != 3
+
+tests\test_user_input.py:101: AssertionError (conftest.py:86)
+2025-04-18 16:18:21 [    INFO] Test session completed (conftest.py:72)

@@ -1,0 +1,7 @@
+2025-04-18 13:28:09 [    INFO] Starting test session. Logging to: C:\Users\denni\Documents\thoughtful task manager\logs\tests\test_run_2025-04-18_13-28-09.log (conftest.py:70)
+2025-04-18 13:28:09 [    INFO] Test passed: test_load_tasks (conftest.py:82)
+2025-04-18 13:28:09 [    INFO] Test passed: test_add_task (conftest.py:82)
+2025-04-18 13:28:09 [    INFO] Test passed: test_update_task (conftest.py:82)
+2025-04-18 13:28:09 [    INFO] Test passed: test_delete_task (conftest.py:82)
+2025-04-18 13:28:09 [    INFO] Test passed: test_get_task (conftest.py:82)
+2025-04-18 13:28:09 [    INFO] Test session completed (conftest.py:72)

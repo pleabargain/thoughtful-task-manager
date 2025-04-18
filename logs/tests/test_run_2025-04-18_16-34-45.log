@@ -1,0 +1,126 @@
+2025-04-18 16:34:45 [    INFO] Starting test session. Logging to: C:\Users\denni\Documents\thoughtful task manager\logs\tests\test_run_2025-04-18_16-34-45.log (conftest.py:70)
+2025-04-18 16:34:45 [    INFO] Test passed: test_task_from_dict_with_id (conftest.py:82)
+2025-04-18 16:34:45 [    INFO] Test passed: test_task_with_id_parameter (conftest.py:82)
+2025-04-18 16:34:45 [    INFO] Test passed: test_file_handler_load_tasks_structure (conftest.py:82)
+2025-04-18 16:34:45 [    INFO] Test passed: test_priority_validation_direct (conftest.py:82)
+2025-04-18 16:34:45 [    INFO] Test passed: test_load_tasks_empty_file (conftest.py:82)
+2025-04-18 16:34:45 [    INFO] Test passed: test_load_tasks_direct_list (conftest.py:82)
+2025-04-18 16:34:45 [    INFO] Test passed: test_load_tasks_with_tasks_key (conftest.py:82)
+2025-04-18 16:34:45 [    INFO] Test passed: test_save_and_load_tasks (conftest.py:82)
+2025-04-18 16:34:45 [    INFO] Test passed: test_client_initialization (conftest.py:82)
+2025-04-18 16:34:49 [    INFO] Test passed: test_connection_retry (conftest.py:82)
+2025-04-18 16:34:49 [    INFO] Test passed: test_model_list_command (conftest.py:82)
+2025-04-18 16:34:49 [    INFO] Test passed: test_model_name_parsing (conftest.py:82)
+2025-04-18 16:34:49 [    INFO] Test passed: test_model_verification_failure (conftest.py:82)
+2025-04-18 16:34:51 [    INFO] Test passed: test_ollama_service_running (conftest.py:82)
+2025-04-18 16:34:51 [    INFO] Test passed: test_load_tasks (conftest.py:82)
+2025-04-18 16:34:51 [    INFO] Test passed: test_add_task (conftest.py:82)
+2025-04-18 16:34:52 [   ERROR] Test failed: test_update_task (conftest.py:84)
+2025-04-18 16:34:52 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x000001CDB31FF890>
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_update_task(task_manager, sample_tasks):
+        """Test updating an existing task."""
+        # First add a task
+        task_manager.add_task(sample_tasks[0])
+    
+        # Update the task
+        update_data = {
+            'status': 'completed',
+            'priority': 'high'
+        }
+    
+        updated_task = task_manager.update_task(sample_tasks[0]['id'], update_data)
+>       assert updated_task['status'] == 'completed'
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests\test_run.py:65: TypeError (conftest.py:86)
+2025-04-18 16:34:52 [   ERROR] Test failed: test_delete_task (conftest.py:84)
+2025-04-18 16:34:52 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x000001CDB31FF020>
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_delete_task(task_manager, sample_tasks):
+        """Test deleting a task."""
+        # First add a task
+        task_manager.add_task(sample_tasks[0])
+    
+        # Delete the task
+        success = task_manager.delete_task(sample_tasks[0]['id'])
+>       assert success is True
+E       assert False is True
+
+tests\test_run.py:76: AssertionError (conftest.py:86)
+2025-04-18 16:34:52 [   ERROR] Test failed: test_get_task (conftest.py:84)
+2025-04-18 16:34:52 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x000001CDB31FF1D0>
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_get_task(task_manager, sample_tasks):
+        """Test getting a specific task."""
+        # First add a task
+        task_manager.add_task(sample_tasks[0])
+    
+        # Get the task
+        task = task_manager.get_task(sample_tasks[0]['id'])
+>       assert task is not None
+E       assert None is not None
+
+tests\test_run.py:88: AssertionError (conftest.py:86)
+2025-04-18 16:34:52 [    INFO] Test passed: test_task_creation (conftest.py:82)
+2025-04-18 16:34:52 [    INFO] Test passed: test_task_to_dict (conftest.py:82)
+2025-04-18 16:34:52 [    INFO] Test passed: test_task_from_dict (conftest.py:82)
+2025-04-18 16:34:52 [    INFO] Test passed: test_task_with_id (conftest.py:82)
+2025-04-18 16:34:52 [    INFO] Test passed: test_task_to_dict_with_id (conftest.py:82)
+2025-04-18 16:34:52 [    INFO] Test passed: test_task_from_dict_with_id (conftest.py:82)
+2025-04-18 16:34:52 [    INFO] Test passed: test_priority_validation_string (conftest.py:82)
+2025-04-18 16:34:52 [    INFO] Test passed: test_priority_validation_out_of_range_high (conftest.py:82)
+2025-04-18 16:34:52 [    INFO] Test passed: test_priority_validation_out_of_range_low (conftest.py:82)
+2025-04-18 16:34:52 [    INFO] Test passed: test_priority_validation_non_integer (conftest.py:82)
+2025-04-18 16:34:57 [   ERROR] Test failed: test_complete_task_lifecycle (conftest.py:84)
+2025-04-18 16:34:57 [   ERROR] Failure details:
+self = <tests.test_user_input.TestUserInput testMethod=test_complete_task_lifecycle>, mock_ask = <MagicMock name='ask' id='1982985138736'>
+
+    @patch('rich.prompt.Prompt.ask')
+    def test_complete_task_lifecycle(self, mock_ask):
+        """Test the complete lifecycle of a task from creation to completion."""
+        # Mock user inputs for creating a task
+        mock_ask.side_effect = [
+            "1",  # View tasks (initially empty)
+            "2",  # Add task
+            "Complete Project Documentation",  # Task title
+            "Write comprehensive documentation for the project",  # Description
+            "5",  # Priority (high)
+            "3",  # Update task
+            "Complete Project Documentation",  # Task to update
+            "status",  # What to update
+            "in_progress",  # New status
+            "3",  # Update task again
+            "Complete Project Documentation",  # Task to update
+            "status",  # What to update
+            "completed",  # New status
+            "1",  # View tasks (now with completed task)
+            "8"   # Exit
+        ]
+    
+        # Run the application with mocked input
+        with patch('rich.console.Console.print') as mock_print:
+            try:
+                self.task_manager.run()
+            except SystemExit:
+                pass  # Expected when exiting
+    
+        # Verify task was created and updated correctly
+        tasks = self.task_manager.list_tasks()
+        self.assertEqual(len(tasks), 1)
+        task = tasks[0]
+    
+        # Verify task properties
+>       self.assertEqual(task.title, "Complete Project Documentation")
+E       AttributeError: 'dict' object has no attribute 'title'
+
+tests\test_user_input.py:62: AttributeError (conftest.py:86)
+2025-04-18 16:35:02 [    INFO] Test passed: test_delete_task (conftest.py:82)
+2025-04-18 16:35:06 [    INFO] Test passed: test_task_priority_validation (conftest.py:82)
+2025-04-18 16:35:06 [    INFO] Test session completed (conftest.py:72)

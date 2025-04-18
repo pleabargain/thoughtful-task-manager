@@ -1,0 +1,275 @@
+2025-04-18 16:26:36 [    INFO] Starting test session. Logging to: C:\Users\denni\Documents\thoughtful task manager\logs\tests\test_run_2025-04-18_16-26-36.log (conftest.py:70)
+2025-04-18 16:26:36 [    INFO] Test passed: test_task_from_dict_with_id (conftest.py:82)
+2025-04-18 16:26:36 [    INFO] Test passed: test_task_with_id_parameter (conftest.py:82)
+2025-04-18 16:26:36 [    INFO] Test passed: test_file_handler_load_tasks_structure (conftest.py:82)
+2025-04-18 16:26:36 [    INFO] Test passed: test_priority_validation_direct (conftest.py:82)
+2025-04-18 16:26:36 [    INFO] Test passed: test_load_tasks_empty_file (conftest.py:82)
+2025-04-18 16:26:36 [    INFO] Test passed: test_load_tasks_direct_list (conftest.py:82)
+2025-04-18 16:26:36 [    INFO] Test passed: test_load_tasks_with_tasks_key (conftest.py:82)
+2025-04-18 16:26:36 [    INFO] Test passed: test_save_and_load_tasks (conftest.py:82)
+2025-04-18 16:26:36 [    INFO] Test passed: test_client_initialization (conftest.py:82)
+2025-04-18 16:26:40 [    INFO] Test passed: test_connection_retry (conftest.py:82)
+2025-04-18 16:26:40 [    INFO] Test passed: test_model_list_command (conftest.py:82)
+2025-04-18 16:26:40 [    INFO] Test passed: test_model_name_parsing (conftest.py:82)
+2025-04-18 16:26:40 [    INFO] Test passed: test_model_verification_failure (conftest.py:82)
+2025-04-18 16:26:42 [    INFO] Test passed: test_ollama_service_running (conftest.py:82)
+2025-04-18 16:26:42 [   ERROR] Test failed: test_load_tasks (conftest.py:84)
+2025-04-18 16:26:42 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x0000028312E316D0>, test_data_file = 'C:\\Users\\denni\\AppData\\Local\\Temp\\pytest-of-denni\\pytest-6\\test_load_tasks0\\test_tasks.json'
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_load_tasks(task_manager, test_data_file, sample_tasks):
+        """Test loading tasks from a file."""
+        # Write sample tasks to the test file
+        with open(test_data_file, 'w') as f:
+            json.dump({'tasks': sample_tasks}, f)
+    
+        # Create a new manager instance to load the tasks
+        manager = TaskManager(data_file=test_data_file)
+>       loaded_tasks = manager.list_tasks()
+
+tests\test_run.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src\main.py:74: in list_tasks
+    return self.task_api.list_tasks()
+src\api\task_api.py:76: in list_tasks
+    return self._file_handler.load_tasks()
+src\utils\file_handler.py:38: in load_tasks
+    return [Task.from_dict(task_data) for task_data in tasks_data]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'src.models.task.Task'>
+data = {'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including setup, usage, and API references', 'due_date': datetime.datetime(2024, 4, 25, 0, 0), 'id': 'task-001', ...}
+
+    @classmethod
+    def from_dict(cls, data: dict) -> 'Task':
+        """Create a Task instance from dictionary data."""
+        if "created_date" in data:
+            data["created_date"] = datetime.fromisoformat(data["created_date"])
+        if "due_date" in data and data["due_date"]:
+            data["due_date"] = datetime.fromisoformat(data["due_date"])
+>       return cls(**data)
+E       TypeError: Task.__init__() got an unexpected keyword argument 'created_at'
+
+src\models\task.py:53: TypeError (conftest.py:86)
+2025-04-18 16:26:42 [   ERROR] Test failed: test_add_task (conftest.py:84)
+2025-04-18 16:26:42 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x0000028312E53410>
+
+    def test_add_task(task_manager):
+        """Test adding a new task."""
+        new_task = {
+            'id': 'task-004',
+            'title': 'New Test Task',
+            'status': 'pending',
+            'priority': 'medium',
+            'due_date': '2024-04-30'
+        }
+    
+>       added_task = task_manager.add_task(new_task)
+
+tests\test_run.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src\main.py:79: in add_task
+    return self.task_api.create_task(
+src\api\task_api.py:42: in create_task
+    task = Task(title=title, description=description, **kwargs)
+<string>:11: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Task(title='New Test Task', description='', id='task-004', dependencies=[], status='pending', priority='medium', created_date=datetime.datetime(2025, 4, 18, 16, 26, 42, 950414), due_date=None)
+
+    def __post_init__(self):
+        """Initialize default values and validate after dataclass initialization."""
+        if self.dependencies is None:
+            self.dependencies = []
+        if self.created_date is None:
+            self.created_date = datetime.now()
+    
+        # Validate priority
+        if not isinstance(self.priority, int) or self.priority < 1 or self.priority > 5:
+            # Clamp to valid range (1-5)
+>           self.priority = max(1, min(5, int(self.priority) if isinstance(self.priority, str) else 3))
+E           ValueError: invalid literal for int() with base 10: 'medium'
+
+src\models\task.py:31: ValueError (conftest.py:86)
+2025-04-18 16:26:43 [   ERROR] Test failed: test_update_task (conftest.py:84)
+2025-04-18 16:26:43 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x0000028312E50380>
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_update_task(task_manager, sample_tasks):
+        """Test updating an existing task."""
+        # First add a task
+>       task_manager.add_task(sample_tasks[0])
+
+tests\test_run.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src\main.py:79: in add_task
+    return self.task_api.create_task(
+src\api\task_api.py:42: in create_task
+    task = Task(title=title, description=description, **kwargs)
+<string>:11: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Task(title='Complete Project Documentation', description='Write comprehensive documentation for the project including ...=[], status='pending', priority='high', created_date=datetime.datetime(2025, 4, 18, 16, 26, 42, 985850), due_date=None)
+
+    def __post_init__(self):
+        """Initialize default values and validate after dataclass initialization."""
+        if self.dependencies is None:
+            self.dependencies = []
+        if self.created_date is None:
+            self.created_date = datetime.now()
+    
+        # Validate priority
+        if not isinstance(self.priority, int) or self.priority < 1 or self.priority > 5:
+            # Clamp to valid range (1-5)
+>           self.priority = max(1, min(5, int(self.priority) if isinstance(self.priority, str) else 3))
+E           ValueError: invalid literal for int() with base 10: 'high'
+
+src\models\task.py:31: ValueError (conftest.py:86)
+2025-04-18 16:26:43 [   ERROR] Test failed: test_delete_task (conftest.py:84)
+2025-04-18 16:26:43 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x0000028312C75C70>
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_delete_task(task_manager, sample_tasks):
+        """Test deleting a task."""
+        # First add a task
+>       task_manager.add_task(sample_tasks[0])
+
+tests\test_run.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src\main.py:79: in add_task
+    return self.task_api.create_task(
+src\api\task_api.py:42: in create_task
+    task = Task(title=title, description=description, **kwargs)
+<string>:11: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Task(title='Complete Project Documentation', description='Write comprehensive documentation for the project including ...s=[], status='pending', priority='high', created_date=datetime.datetime(2025, 4, 18, 16, 26, 43, 24260), due_date=None)
+
+    def __post_init__(self):
+        """Initialize default values and validate after dataclass initialization."""
+        if self.dependencies is None:
+            self.dependencies = []
+        if self.created_date is None:
+            self.created_date = datetime.now()
+    
+        # Validate priority
+        if not isinstance(self.priority, int) or self.priority < 1 or self.priority > 5:
+            # Clamp to valid range (1-5)
+>           self.priority = max(1, min(5, int(self.priority) if isinstance(self.priority, str) else 3))
+E           ValueError: invalid literal for int() with base 10: 'high'
+
+src\models\task.py:31: ValueError (conftest.py:86)
+2025-04-18 16:26:43 [   ERROR] Test failed: test_get_task (conftest.py:84)
+2025-04-18 16:26:43 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x0000028312E31B50>
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_get_task(task_manager, sample_tasks):
+        """Test getting a specific task."""
+        # First add a task
+>       task_manager.add_task(sample_tasks[0])
+
+tests\test_run.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src\main.py:79: in add_task
+    return self.task_api.create_task(
+src\api\task_api.py:42: in create_task
+    task = Task(title=title, description=description, **kwargs)
+<string>:11: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Task(title='Complete Project Documentation', description='Write comprehensive documentation for the project including ...s=[], status='pending', priority='high', created_date=datetime.datetime(2025, 4, 18, 16, 26, 43, 53502), due_date=None)
+
+    def __post_init__(self):
+        """Initialize default values and validate after dataclass initialization."""
+        if self.dependencies is None:
+            self.dependencies = []
+        if self.created_date is None:
+            self.created_date = datetime.now()
+    
+        # Validate priority
+        if not isinstance(self.priority, int) or self.priority < 1 or self.priority > 5:
+            # Clamp to valid range (1-5)
+>           self.priority = max(1, min(5, int(self.priority) if isinstance(self.priority, str) else 3))
+E           ValueError: invalid literal for int() with base 10: 'high'
+
+src\models\task.py:31: ValueError (conftest.py:86)
+2025-04-18 16:26:43 [    INFO] Test passed: test_task_creation (conftest.py:82)
+2025-04-18 16:26:43 [    INFO] Test passed: test_task_to_dict (conftest.py:82)
+2025-04-18 16:26:43 [    INFO] Test passed: test_task_from_dict (conftest.py:82)
+2025-04-18 16:26:43 [    INFO] Test passed: test_task_with_id (conftest.py:82)
+2025-04-18 16:26:43 [    INFO] Test passed: test_task_to_dict_with_id (conftest.py:82)
+2025-04-18 16:26:43 [    INFO] Test passed: test_task_from_dict_with_id (conftest.py:82)
+2025-04-18 16:26:43 [    INFO] Test passed: test_priority_validation_string (conftest.py:82)
+2025-04-18 16:26:43 [   ERROR] Test failed: test_priority_validation_out_of_range_high (conftest.py:84)
+2025-04-18 16:26:43 [   ERROR] Failure details:
+def test_priority_validation_out_of_range_high():
+        """Test that priority is clamped when out of range (high)."""
+        task = Task(
+            title="Test Task",
+            description="Test Description",
+            priority=10
+        )
+>       assert task.priority == 5  # Should be clamped to max value (5)
+E       AssertionError: assert 3 == 5
+E        +  where 3 = Task(title='Test Task', description='Test Description', id=None, dependencies=[], status='pending', priority=3, created_date=datetime.datetime(2025, 4, 18, 16, 26, 43, 99716), due_date=None).priority
+
+tests\test_task_model.py:64: AssertionError (conftest.py:86)
+2025-04-18 16:26:43 [   ERROR] Test failed: test_priority_validation_out_of_range_low (conftest.py:84)
+2025-04-18 16:26:43 [   ERROR] Failure details:
+def test_priority_validation_out_of_range_low():
+        """Test that priority is clamped when out of range (low)."""
+        task = Task(
+            title="Test Task",
+            description="Test Description",
+            priority=0
+        )
+>       assert task.priority == 1  # Should be clamped to min value (1)
+E       AssertionError: assert 3 == 1
+E        +  where 3 = Task(title='Test Task', description='Test Description', id=None, dependencies=[], status='pending', priority=3, created_date=datetime.datetime(2025, 4, 18, 16, 26, 43, 107883), due_date=None).priority
+
+tests\test_task_model.py:73: AssertionError (conftest.py:86)
+2025-04-18 16:26:43 [   ERROR] Test failed: test_priority_validation_non_integer (conftest.py:84)
+2025-04-18 16:26:43 [   ERROR] Failure details:
+def test_priority_validation_non_integer():
+        """Test that priority is set to default when non-integer."""
+>       task = Task(
+            title="Test Task",
+            description="Test Description",
+            priority="high"  # Non-integer string
+        )
+
+tests\test_task_model.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<string>:11: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Task(title='Test Task', description='Test Description', id=None, dependencies=[], status='pending', priority='high', created_date=datetime.datetime(2025, 4, 18, 16, 26, 43, 115884), due_date=None)
+
+    def __post_init__(self):
+        """Initialize default values and validate after dataclass initialization."""
+        if self.dependencies is None:
+            self.dependencies = []
+        if self.created_date is None:
+            self.created_date = datetime.now()
+    
+        # Validate priority
+        if not isinstance(self.priority, int) or self.priority < 1 or self.priority > 5:
+            # Clamp to valid range (1-5)
+>           self.priority = max(1, min(5, int(self.priority) if isinstance(self.priority, str) else 3))
+E           ValueError: invalid literal for int() with base 10: 'high'
+
+src\models\task.py:31: ValueError (conftest.py:86)
+2025-04-18 16:26:47 [    INFO] Test passed: test_complete_task_lifecycle (conftest.py:82)
+2025-04-18 16:26:52 [    INFO] Test passed: test_delete_task (conftest.py:82)
+2025-04-18 16:26:57 [    INFO] Test passed: test_task_priority_validation (conftest.py:82)
+2025-04-18 16:26:57 [    INFO] Test session completed (conftest.py:72)

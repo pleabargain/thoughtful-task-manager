@@ -1,0 +1,84 @@
+2025-04-18 13:49:56 [    INFO] Starting test session. Logging to: C:\Users\denni\Documents\thoughtful task manager\logs\tests\test_run_2025-04-18_13-49-56.log (conftest.py:70)
+2025-04-18 13:50:04 [    INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK" (_client.py:1038)
+2025-04-18 13:50:04 [    INFO] Test passed: test_model (conftest.py:82)
+2025-04-18 13:50:04 [    INFO] Test passed: test_client_initialization (conftest.py:82)
+2025-04-18 13:50:08 [    INFO] Test passed: test_connection_retry (conftest.py:82)
+2025-04-18 13:50:08 [    INFO] Test passed: test_model_list_command (conftest.py:82)
+2025-04-18 13:50:08 [    INFO] Test passed: test_model_name_parsing (conftest.py:82)
+2025-04-18 13:50:08 [    INFO] Test passed: test_model_verification_failure (conftest.py:82)
+2025-04-18 13:50:10 [    INFO] Test passed: test_ollama_service_running (conftest.py:82)
+2025-04-18 13:50:10 [   ERROR] Test failed: test_load_tasks (conftest.py:84)
+2025-04-18 13:50:10 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x000001B68498DF70>, test_data_file = 'C:\\Users\\denni\\AppData\\Local\\Temp\\pytest-of-denni\\pytest-1\\test_load_tasks0\\test_tasks.json'
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_load_tasks(task_manager, test_data_file, sample_tasks):
+        """Test loading tasks from a file."""
+        # Write sample tasks to the test file
+        with open(test_data_file, 'w') as f:
+            json.dump({'tasks': sample_tasks}, f)
+    
+        # Create a new manager instance to load the tasks
+        manager = TaskManager(data_file=test_data_file)
+>       loaded_tasks = manager.list_tasks()
+E       AttributeError: 'TaskManager' object has no attribute 'list_tasks'
+
+tests\test_run.py:31: AttributeError (conftest.py:86)
+2025-04-18 13:50:10 [   ERROR] Test failed: test_add_task (conftest.py:84)
+2025-04-18 13:50:10 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x000001B68498D460>
+
+    def test_add_task(task_manager):
+        """Test adding a new task."""
+        new_task = {
+            'id': 'task-004',
+            'title': 'New Test Task',
+            'status': 'pending',
+            'priority': 'medium',
+            'due_date': '2024-04-30'
+        }
+    
+>       added_task = task_manager.add_task(new_task)
+E       AttributeError: 'TaskManager' object has no attribute 'add_task'
+
+tests\test_run.py:47: AttributeError (conftest.py:86)
+2025-04-18 13:50:10 [   ERROR] Test failed: test_update_task (conftest.py:84)
+2025-04-18 13:50:10 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x000001B68498F6B0>
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_update_task(task_manager, sample_tasks):
+        """Test updating an existing task."""
+        # First add a task
+>       task_manager.add_task(sample_tasks[0])
+E       AttributeError: 'TaskManager' object has no attribute 'add_task'
+
+tests\test_run.py:56: AttributeError (conftest.py:86)
+2025-04-18 13:50:10 [   ERROR] Test failed: test_delete_task (conftest.py:84)
+2025-04-18 13:50:10 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x000001B6849F2D50>
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_delete_task(task_manager, sample_tasks):
+        """Test deleting a task."""
+        # First add a task
+>       task_manager.add_task(sample_tasks[0])
+E       AttributeError: 'TaskManager' object has no attribute 'add_task'
+
+tests\test_run.py:72: AttributeError (conftest.py:86)
+2025-04-18 13:50:10 [   ERROR] Test failed: test_get_task (conftest.py:84)
+2025-04-18 13:50:10 [   ERROR] Failure details:
+task_manager = <src.main.TaskManager object at 0x000001B6849F3A40>
+sample_tasks = [{'created_at': '2024-04-18T10:00:00', 'description': 'Write comprehensive documentation for the project including set...00', 'description': 'Perform code review and address linting issues', 'due_date': '2024-04-20', 'id': 'task-003', ...}]
+
+    def test_get_task(task_manager, sample_tasks):
+        """Test getting a specific task."""
+        # First add a task
+>       task_manager.add_task(sample_tasks[0])
+E       AttributeError: 'TaskManager' object has no attribute 'add_task'
+
+tests\test_run.py:84: AttributeError (conftest.py:86)
+2025-04-18 13:50:10 [    INFO] Test passed: test_task_creation (conftest.py:82)
+2025-04-18 13:50:10 [    INFO] Test passed: test_task_to_dict (conftest.py:82)
+2025-04-18 13:50:10 [    INFO] Test passed: test_task_from_dict (conftest.py:82)
+2025-04-18 13:50:10 [    INFO] Test session completed (conftest.py:72)

@@ -1,0 +1,74 @@
+2025-04-18 13:20:24 [    INFO] Starting test session. Logging to: C:\Users\denni\Documents\thoughtful task manager\logs\tests\test_run_2025-04-18_13-20-24.log (conftest.py:70)
+2025-04-18 13:20:27 [    INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 404 Not Found" (_client.py:1038)
+2025-04-18 13:20:27 [    INFO] Test passed: test_model (conftest.py:82)
+2025-04-18 13:20:29 [    INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 404 Not Found" (_client.py:1038)
+2025-04-18 13:20:29 [   ERROR] Test failed: test_model_with_fixture (conftest.py:84)
+2025-04-18 13:20:29 [   ERROR] Failure details:
+model_name = 'llama2:latest'
+
+    def test_model_with_fixture(model_name):
+        """Test if a model can be used with pytest fixture."""
+>       assert test_model(model_name), "Model test failed"
+E       AssertionError: Model test failed
+E       assert False
+E        +  where False = test_model('llama2:latest')
+
+test_ollama.py:116: AssertionError (conftest.py:86)
+2025-04-18 13:20:29 [   ERROR] Test failed: test_client_initialization (conftest.py:84)
+2025-04-18 13:20:29 [   ERROR] Failure details:
+self = <tests.test_ollama_connection.TestOllamaConnection testMethod=test_client_initialization>
+mock_client = <MagicMock name='Client' id='1758074273712'>
+mock_verify = <MagicMock name='_verify_model' id='1758078494832'>
+mock_models = <MagicMock name='get_available_models' id='1758078498960'>
+mock_connection = <MagicMock name='test_connection' id='1758078600880'>
+mock_input = <MagicMock name='input' id='1758078171904'>
+
+    @patch('builtins.input', return_value='1')
+    @patch('src.api.ai_api.AIAPI.test_connection')
+    @patch('src.api.ai_api.AIAPI.get_available_models')
+    @patch('src.api.ai_api.AIAPI._verify_model')
+    @patch('ollama.Client')
+    def test_client_initialization(self, mock_client, mock_verify, mock_models, mock_connection, mock_input):
+        """Test Ollama client initialization with mocked client."""
+        # Setup mocks
+        mock_instance = MagicMock()
+        mock_client.return_value = mock_instance
+        mock_connection.return_value = True
+        mock_verify.return_value = True
+        mock_models.return_value = [
+            {'name': 'test:latest', 'size': '1.0GB', 'modified': 'now'}
+        ]
+    
+        # Test successful initialization
+        self.api.initialize()
+        mock_client.assert_called_once_with(host="http://localhost:11434")
+        mock_verify.assert_called_once()
+        mock_models.assert_called_once()
+>       mock_input.assert_called_once()
+
+tests\test_ollama_connection.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='input' id='1758078171904'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'input' to have been called once. Called 0 times.
+
+C:\Python312\Lib\unittest\mock.py:928: AssertionError (conftest.py:86)
+2025-04-18 13:20:33 [    INFO] Test passed: test_connection_retry (conftest.py:82)
+2025-04-18 13:20:33 [    INFO] Test passed: test_model_list_command (conftest.py:82)
+2025-04-18 13:20:33 [    INFO] Test passed: test_model_name_parsing (conftest.py:82)
+2025-04-18 13:20:33 [    INFO] Test passed: test_model_verification_failure (conftest.py:82)
+2025-04-18 13:20:35 [    INFO] Test passed: test_ollama_service_running (conftest.py:82)
+2025-04-18 13:20:35 [    INFO] Test passed: test_task_creation (conftest.py:82)
+2025-04-18 13:20:35 [    INFO] Test passed: test_task_to_dict (conftest.py:82)
+2025-04-18 13:20:35 [    INFO] Test passed: test_task_from_dict (conftest.py:82)
+2025-04-18 13:20:35 [    INFO] Test session completed (conftest.py:72)

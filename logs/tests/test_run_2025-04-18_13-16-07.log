@@ -1,0 +1,68 @@
+2025-04-18 13:16:07 [    INFO] Starting test session. Logging to: C:\Users\denni\Documents\thoughtful task manager\logs\tests\test_run_2025-04-18_13-16-07.log (conftest.py:65)
+2025-04-18 13:16:07 [   ERROR] Test setup failed: test_model (conftest.py:88)
+2025-04-18 13:16:07 [   ERROR] Setup failure details:
+file C:\Users\denni\Documents\thoughtful task manager\test_ollama.py, line 93
+  def test_model(model_name):
+E       fixture 'model_name' not found
+>       available fixtures: _session_event_loop, anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, cov, dash_br, dash_duo, dash_duo_mp, dash_multi_process_server, dash_process_server, dash_thread_server, dashjl, dashjl_server, dashr, dashr_server, diskcache_manager, doctest_namespace, event_loop, event_loop_policy, expect, monkeypatch, no_cover, patch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, setup_test_logging, spy2, src/api::<event_loop>, test_ollama.py::<event_loop>, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory, unstub, unstub_, unused_tcp_port, unused_tcp_port_factory, unused_udp_port, unused_udp_port_factory, when, when2
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+C:\Users\denni\Documents\thoughtful task manager\test_ollama.py:93 (conftest.py:90)
+2025-04-18 13:16:08 [   ERROR] Test failed: test_client_initialization (conftest.py:79)
+2025-04-18 13:16:08 [   ERROR] Failure details:
+self = <tests.test_ollama_connection.TestOllamaConnection testMethod=test_client_initialization>
+mock_client = <MagicMock name='Client' id='1649609395280'>
+mock_verify = <MagicMock name='_verify_model' id='1649609399360'>
+mock_models = <MagicMock name='get_available_models' id='1649608256560'>
+mock_connection = <MagicMock name='test_connection' id='1649609407184'>
+mock_input = <MagicMock name='input' id='1649606311040'>
+
+    @patch('builtins.input', return_value='1')
+    @patch('src.api.ai_api.AIAPI.test_connection')
+    @patch('src.api.ai_api.AIAPI.get_available_models')
+    @patch('src.api.ai_api.AIAPI._verify_model')
+    @patch('ollama.Client')
+    def test_client_initialization(self, mock_client, mock_verify, mock_models, mock_connection, mock_input):
+        """Test Ollama client initialization with mocked client."""
+        # Setup mocks
+        mock_instance = MagicMock()
+        mock_client.return_value = mock_instance
+        mock_connection.return_value = True
+        mock_verify.return_value = True
+        mock_models.return_value = [
+            {'name': 'test:latest', 'size': '1.0GB', 'modified': 'now'}
+        ]
+    
+        # Test successful initialization
+        self.api.initialize()
+        mock_client.assert_called_once_with(host="http://localhost:11434")
+        mock_verify.assert_called_once()
+        mock_models.assert_called_once()
+>       mock_input.assert_called_once()
+
+tests\test_ollama_connection.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <MagicMock name='input' id='1649606311040'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'input' to have been called once. Called 0 times.
+
+C:\Python312\Lib\unittest\mock.py:928: AssertionError (conftest.py:81)
+2025-04-18 13:16:12 [    INFO] Test passed: test_connection_retry (conftest.py:77)
+2025-04-18 13:16:12 [    INFO] Test passed: test_model_list_command (conftest.py:77)
+2025-04-18 13:16:12 [    INFO] Test passed: test_model_name_parsing (conftest.py:77)
+2025-04-18 13:16:12 [    INFO] Test passed: test_model_verification_failure (conftest.py:77)
+2025-04-18 13:16:14 [    INFO] Test passed: test_ollama_service_running (conftest.py:77)
+2025-04-18 13:16:14 [    INFO] Test passed: test_task_creation (conftest.py:77)
+2025-04-18 13:16:14 [    INFO] Test passed: test_task_to_dict (conftest.py:77)
+2025-04-18 13:16:14 [    INFO] Test passed: test_task_from_dict (conftest.py:77)
+2025-04-18 13:16:14 [    INFO] Test session completed (conftest.py:67)

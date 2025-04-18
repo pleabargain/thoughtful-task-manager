@@ -1,0 +1,6 @@
+2025-04-18 17:10:42 [    INFO] Starting test session. Logging to: C:\Users\denni\Documents\thoughtful task manager\logs\tests\test_run_2025-04-18_17-10-42.log (conftest.py:70)
+2025-04-18 17:11:38 [    INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK" (_client.py:1027)
+2025-04-18 17:13:06 [    INFO] HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK" (_client.py:1027)
+2025-04-18 17:15:01 [    INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK" (_client.py:1027)
+2025-04-18 17:16:11 [    INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK" (_client.py:1027)
+2025-04-18 17:17:09 [    INFO] Test session completed (conftest.py:72)

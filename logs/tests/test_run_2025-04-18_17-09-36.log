@@ -1,0 +1,8 @@
+2025-04-18 17:09:36 [    INFO] Starting test session. Logging to: C:\Users\denni\Documents\thoughtful task manager\logs\tests\test_run_2025-04-18_17-09-36.log (conftest.py:70)
+2025-04-18 17:09:55 [    INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK" (_client.py:1027)
+2025-04-18 17:10:18 [    INFO] HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK" (_client.py:1027)
+2025-04-18 17:11:07 [    INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK" (_client.py:1027)
+2025-04-18 17:12:14 [    INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK" (_client.py:1027)
+2025-04-18 17:13:20 [    INFO] HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK" (_client.py:1027)
+2025-04-18 17:15:07 [    INFO] Test passed: test_add_task_dict_attribute_error (conftest.py:82)
+2025-04-18 17:15:07 [    INFO] Test session completed (conftest.py:72)

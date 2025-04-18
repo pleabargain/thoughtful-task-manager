@@ -4,7 +4,7 @@ Provides RESTful API endpoints and MCP pattern implementation.
 """
 
 from .base import BaseAPI
-from .task_api import TaskAPI
-from .ai_api import AIAPI
+from src.api.task_api import TaskAPI
+from src.api.ai_api import AIAPI
 
 __all__ = ['BaseAPI', 'TaskAPI', 'AIAPI'] 

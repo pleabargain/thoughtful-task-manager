@@ -1,0 +1,125 @@
+2025-04-18 19:59:41 [    INFO] Starting test session. Logging to: C:\Users\denni\Documents\thoughtful task manager\logs\tests\test_run_2025-04-18_19-59-41.log (conftest.py:70)
+2025-04-18 19:59:41 [    INFO] Test passed: test_task_with_id (conftest.py:82)
+2025-04-18 19:59:41 [    INFO] Test passed: test_task_to_dict_with_id (conftest.py:82)
+2025-04-18 19:59:41 [    INFO] Test passed: test_task_from_dict_with_id (conftest.py:82)
+2025-04-18 19:59:41 [    INFO] Test passed: test_priority_validation_string (conftest.py:82)
+2025-04-18 19:59:41 [    INFO] Test passed: test_priority_validation_out_of_range_high (conftest.py:82)
+2025-04-18 19:59:41 [    INFO] Test passed: test_priority_validation_out_of_range_low (conftest.py:82)
+2025-04-18 19:59:41 [    INFO] Test passed: test_priority_validation_non_integer (conftest.py:82)
+2025-04-18 19:59:41 [    INFO] Test passed: test_title_validation_numeric (conftest.py:82)
+2025-04-18 19:59:41 [    INFO] Test passed: test_title_validation_length (conftest.py:82)
+2025-04-18 20:00:11 [    INFO] Test passed: test_add_task_dict_attribute_error (conftest.py:82)
+2025-04-18 20:00:44 [    INFO] Test passed: test_create_new_task_file (conftest.py:82)
+2025-04-18 20:01:17 [    INFO] Test passed: test_create_new_task_file_existing (conftest.py:82)
+2025-04-18 20:01:49 [    INFO] Test passed: test_display_tasks_with_dict_tasks (conftest.py:82)
+2025-04-18 20:02:19 [   ERROR] Test failed: test_display_tasks_with_source_and_due_date (conftest.py:84)
+2025-04-18 20:02:19 [   ERROR] Failure details:
+self = <tests.test_task_manager.TestTaskManager testMethod=test_display_tasks_with_source_and_due_date>
+
+    def test_display_tasks_with_source_and_due_date(self):
+        """Test that display_tasks correctly shows source and due date."""
+        # Create sample task dictionaries with source and due date
+        from datetime import datetime
+    
+        task_dicts = [
+            {
+                'id': 'test-001',
+                'title': 'Test Task 1',
+                'description': 'Test Description 1',
+                'status': 'pending',
+                'priority': 3,
+                'created_at': '2025-04-18T12:00:00',
+                'updated_at': '2025-04-18T12:00:00',
+                'source': 'human',
+                'due_date': '2025-05-01T12:00:00',
+                'dependencies': []
+            },
+            {
+                'id': 'test-002',
+                'title': 'Test Task 2',
+                'description': 'Test Description 2',
+                'status': 'completed',
+                'priority': 5,
+                'created_at': '2025-04-18T12:00:00',
+                'updated_at': '2025-04-18T12:00:00',
+                'source': 'AI Model',
+                'due_date': None,
+                'dependencies': []
+            }
+        ]
+    
+        # Mock the list_tasks method to return the sample dictionaries
+        with patch.object(self.task_manager.task_api, 'list_tasks', return_value=task_dicts):
+            # Mock the console.print method
+            with patch('src.main.console.print') as mock_print:
+                # Call display_tasks
+>               self.task_manager.display_tasks(task_dicts)
+
+tests\test_task_manager.py:258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <src.main.TaskManager object at 0x0000016C955B35C0>
+tasks = [{'created_at': '2025-04-18T12:00:00', 'dependencies': [], 'description': 'Test Description 1', 'due_date': '2025-05-0... {'created_at': '2025-04-18T12:00:00', 'dependencies': [], 'description': 'Test Description 2', 'due_date': None, ...}]
+
+    def display_tasks(self, tasks):
+        """Display tasks in a formatted table."""
+        if not tasks:
+            console.print("[yellow]No tasks found.[/yellow]")
+            return
+    
+        table = Table(show_header=True)
+        table.add_column("Title", style="cyan")
+        table.add_column("Description")
+        table.add_column("Priority", justify="center")
+        table.add_column("Status", justify="center")
+        table.add_column("Due Date", justify="center")  # New column
+        table.add_column("Source", justify="center")    # New column
+        table.add_column("Dependencies", justify="center")
+    
+        # Create a dictionary of task IDs to titles for dependency lookup
+        task_titles = {}
+        for t in tasks:
+            if isinstance(t, dict):
+                task_titles[t['id']] = t['title']
+            else:
+                task_titles[t.id] = t.title
+    
+        for task in tasks:
+            # Handle both Task objects and dictionaries
+            if isinstance(task, dict):
+                priority = task['priority']
+                title = task['title']
+                description = task['description']
+                status = task['status']
+                dependencies = task.get('dependencies', [])
+                source = task.get('source', 'human')
+                due_date = task.get('due_date', None)
+            else:
+                priority = task.priority
+                title = task.title
+                description = task.description
+                status = task.status
+                dependencies = task.dependencies if task.dependencies else []
+                source = task.source
+                due_date = task.due_date
+    
+            priority_style = {
+                1: "green",
+                2: "blue",
+                3: "yellow",
+                4: "red",
+                5: "red bold"
+            }.get(priority, "white")
+    
+            # Format due date
+            due_date_display = ""
+            if due_date:
+                if isinstance(due_date, str):
+                    try:
+>                       due_date = datetime.fromisoformat(due_date)
+E                       NameError: name 'datetime' is not defined. Did you forget to import 'datetime'?
+
+src\main.py:100: NameError (conftest.py:86)
+2025-04-18 20:02:52 [    INFO] Test passed: test_duplicate_title_prevention (conftest.py:82)
+2025-04-18 20:03:25 [    INFO] Test passed: test_update_task_title_uniqueness (conftest.py:82)
+2025-04-18 20:03:25 [    INFO] Test session completed (conftest.py:72)

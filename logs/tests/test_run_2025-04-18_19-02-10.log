@@ -1,0 +1,8 @@
+2025-04-18 19:02:10 [    INFO] Starting test session. Logging to: C:\Users\denni\Documents\thoughtful task manager\logs\tests\test_run_2025-04-18_19-02-10.log (conftest.py:70)
+2025-04-18 19:02:40 [    INFO] Test passed: test_add_task_dict_attribute_error (conftest.py:82)
+2025-04-18 19:03:10 [    INFO] Test passed: test_create_new_task_file (conftest.py:82)
+2025-04-18 19:03:38 [    INFO] Test passed: test_create_new_task_file_existing (conftest.py:82)
+2025-04-18 19:04:11 [    INFO] Test passed: test_display_tasks_with_dict_tasks (conftest.py:82)
+2025-04-18 19:04:30 [    INFO] Test passed: test_duplicate_title_prevention (conftest.py:82)
+2025-04-18 19:05:03 [    INFO] Test passed: test_update_task_title_uniqueness (conftest.py:82)
+2025-04-18 19:05:03 [    INFO] Test session completed (conftest.py:72)

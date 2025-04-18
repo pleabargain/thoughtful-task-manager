@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "model": "mistral:latest",
+    "timestamp": "2025-04-18T18:53:20.725522",
+    "task_count": 3,
+    "analysis_time_seconds": 63.63,
+    "source_file": "data\\sample_tasks.json"
+  },
+  "analysis": {
+    "Most Productive Times": "It is difficult to determine the most productive times as there are no completed tasks with specific timestamps. However, it appears that tasks are being created and updated during standard working hours.",
+    "Common Dependencies": "There are currently no common dependencies across all tasks.",
+    "Task Completion Trends": {
+      "Completed Tasks": 1,
+      "In Progress Tasks": 1,
+      "Pending Tasks": 1
+    },
+    "Areas for Improvement": [
+      {
+        "Description": "Add timestamps to completed tasks to better understand productivity patterns.",
+        "Suggestion": "Include a completion time or work duration field in the task history."
+      }
+    ],
+    "Patterns Across ALL Tasks": [
+      {
+        "Title": "Task Statuses",
+        "Data": [
+          {
+            "Status": "pending",
+            "Count": 1
+          },
+          {
+            "Status": "completed",
+            "Count": 1
+          },
+          {
+            "Status": "in_progress",
+            "Count": 1
+          }
+        ]
+      },
+      {
+        "Title": "Task Priorities",
+        "Data": [
+          {
+            "Priority": 2,
+            "Count": 1
+          },
+          {
+            "Priority": 3,
+            "Count": 1
+          },
+          {
+            "Priority": 5,
+            "Count": 1
+          }
+        ]
+      },
+      {
+        "Title": "Task Sources",
+        "Data": [
+          {
+            "Source": "human",
+            "Count": 3
+          }
+        ]
+      }
+    ]
+  }
+}

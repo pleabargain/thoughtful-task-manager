@@ -1,0 +1,67 @@
+[
+  {
+    "id": "work-001",
+    "title": "Prepare quarterly report",
+    "description": "Compile data and prepare the quarterly financial report",
+    "dependencies": [],
+    "status": "pending",
+    "priority": 4,
+    "created_date": "2025-04-15T10:00:00",
+    "due_date": "2025-04-28T17:00:00",
+    "uuid": "36aa1ed8-26e2-4171-becf-b3025eb0d23d",
+    "model": "unknown",
+    "source": "human"
+  },
+  {
+    "id": "work-002",
+    "title": "Client presentation",
+    "description": "Create and deliver presentation for the new client",
+    "dependencies": [],
+    "status": "in_progress",
+    "priority": 5,
+    "created_date": "2025-04-16T11:30:00",
+    "due_date": "2025-04-22T14:00:00",
+    "uuid": "e1e89c39-dce6-4a3f-a97c-561d4e050fd4",
+    "model": "unknown",
+    "source": "human"
+  },
+  {
+    "id": "work-003",
+    "title": "Update documentation",
+    "description": "Update the project documentation with recent changes",
+    "dependencies": [],
+    "status": "pending",
+    "priority": 2,
+    "created_date": "2025-04-17T15:20:00",
+    "due_date": "2025-04-24T17:00:00",
+    "uuid": "283588b6-7f68-4e9e-8500-fa731f9f4c2e",
+    "model": "unknown",
+    "source": "human"
+  },
+  {
+    "id": "work-004",
+    "title": "Team performance reviews",
+    "description": "Complete quarterly performance reviews for team members",
+    "dependencies": [],
+    "status": "pending",
+    "priority": 3,
+    "created_date": "2025-04-18T09:15:00",
+    "due_date": "2025-04-30T17:00:00",
+    "uuid": "8d3bc26d-61f3-4ae2-a5b2-31d1bd813379",
+    "model": "unknown",
+    "source": "human"
+  },
+  {
+    "id": "task-1129c0",
+    "uuid": "f72cd279-4f2a-498d-a720-beddf08b129a",
+    "title": "Test Schema Task",
+    "description": "This is a test task created with the new schema",
+    "dependencies": [],
+    "status": "pending",
+    "priority": 3,
+    "created_date": "2025-04-18T18:24:18.110587",
+    "due_date": null,
+    "model": "Claude",
+    "source": "human"
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "model": "mistral:latest",
+    "timestamp": "2025-04-18T18:51:20.896046",
+    "task_count": 5,
+    "analysis_time_seconds": 42.09,
+    "source_file": "data\\tasks.json"
+  },
+  "analysis": {
+    "Most Productive Times": "All tasks were created between April 15 and April 18.",
+    "Common Dependencies": "None of the tasks have dependencies on other tasks.",
+    "Task Completion Trends": "The tasks are either 'pending' or 'in_progress'. No task has been completed yet.",
+    "Areas for Improvement": "Improve task prioritization as some tasks with lower priority (2 and 3) have longer due dates compared to higher priority tasks. Ensure all tasks have a due date.",
+    "Patterns Across ALL Tasks": {
+      "Source": "All tasks were created by humans.",
+      "Priority Range": "Task priorities range from 2 to 5.",
+      "Model": "Only one task (task-1129c0) has a specified model ('Claude') while the rest are unknown."
+    }
+  }
+}

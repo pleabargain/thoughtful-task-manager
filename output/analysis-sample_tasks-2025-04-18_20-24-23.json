@@ -1,0 +1,8 @@
+{
+  "Priority Distribution": "Could not analyze priority distribution due to parsing error.",
+  "Status Patterns": "Could not analyze status patterns due to parsing error.",
+  "Time Management": "Could not analyze time management due to parsing error.",
+  "Task Relationships": "Could not analyze task relationships due to parsing error.",
+  "Content Analysis": "Could not analyze content due to parsing error.",
+  "Raw Content": " Here is the analysis of the task history based on your request:\n\n```json\n{\n  \"Most Productive Times\": {\n     \"Day\": [\n        \"2025-04-17\", // As there's only one completed task, it can't be determined if this is a recurring pattern.\n     ],\n     \"Time\": [\n        \"09:30:00\" // The only completed task was scheduled at this time.\n     ]\n  },\n  \"Common Dependencies\": {\n     \"Count\": 2, // Out of 3 tasks, 2 tasks have no dependencies.\n     \"Percentage\": 67 // Two-thirds of the tasks do not depend on other tasks.\n  },\n  \"Task Completion Trends\": {\n     \"Completed Tasks\": 1,\n     \"In Progress Tasks\": 1,\n     \"Pending Tasks\": 1,\n     \"Total Tasks\": 3 // The number of each task status can be calculated from the total tasks.\n  },\n  \"Areas for Improvement\": [\n     \"More detailed descriptions or dependencies could help in better planning and prioritization.\",\n     \"Setting due dates for all tasks to aid in time management.\"\n  ],\n  \"Patterns Across ALL Tasks\": {\n     \"Task Source\": \"human\", // A..."
+}
